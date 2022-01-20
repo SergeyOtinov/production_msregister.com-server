@@ -1,4 +1,5 @@
 const userService = require('../services/user-service');
+const mailerService = require('../services/mailer-service')
 const { validationResult } = require('express-validator');
 class UserController {
 	async login(req, res, next) {
@@ -59,7 +60,7 @@ class UserController {
 		}
 	}
 
-	async logout(req, res) {
+	async logout(req, res, next) {
 		try {
 			const { refreshToken } = req.cookies;
 			const token = await userService.logout(refreshToken);
@@ -70,12 +71,22 @@ class UserController {
 		}
 	}
 
-	async refresh(req, res) {
+	async refresh(req, res, next) {
 		try {
 			const { refreshToken } = req.cookies;
 			const userData = await userService.refresh(refreshToken);
 			res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
 			return res.json(userData);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async mailSend(req, res, next) {
+		try {
+			const { email, phone, name, company, request, vessel, imo } = req.body;
+			mailerService.send(email, phone, name, company, request, vessel, imo)
+			return res.json('Email sent successfully!');
 		} catch (e) {
 			next(e);
 		}

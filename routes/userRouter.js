@@ -12,6 +12,7 @@ router.post('/create', [
 	userController.createUser)
 router.post('/update', userController.updateUser)
 router.post('/delete', userController.deleteUser)
+router.post('/send', userController.mailSend)
 router.get('/logout', userController.logout)
 router.get('/refresh', userController.refresh)
 router.get('/users', authMiddleware, userController.getUsers)
