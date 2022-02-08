@@ -9,7 +9,7 @@ class UserService {
 	async login(userid, password) {
 		const user = await User.findOne({ userid }) || await User.findOne({ email: userid });
 		if (!user) {
-			throw ApiError.BedRequest(`User with ${userid} not exist!`);
+			throw ApiError.BedRequest(`User with "${userid}" not exist!`);
 		}
 		const validPassword = bcrypt.compareSync(password, user.password);
 		if (!validPassword) {
@@ -57,22 +57,26 @@ class UserService {
 		const hashPassword = bcrypt.hashSync(password, 7);
 		const userRole = await Role.findOne({ value: "USER" });
 		const user = new User({ userid, email, password: hashPassword, name, surname, roles: [userRole.value] });
-		
+
 		await user.save();
 		return user;
 	}
 
-	async updateUser(userid, newUserid, email, password, name, surname) {
-		const hashPassword = bcrypt.hashSync(password, 7);
-		const candidate = await User.findOne({ userid });
-		Object.assign(candidate, { userid: newUserid, email, password: hashPassword, name, surname });
-		candidate.save();
+	async updateUser(id, userid, email, name, surname) {
+		const candidate = await User.findByIdAndUpdate(id, { userid, email, name, surname });
 		return candidate;
 	}
+	async updatePasswordUser(passwordId, newPassword) {
+		const user = await User.findById(passwordId);
+		const hashPassword = bcrypt.hashSync(newPassword, 7);
+		const result = await User.findByIdAndUpdate(passwordId, { password: hashPassword });
+		return user;
+	}
 
-	async deleteUser(userid) {
-		const candidate = await User.findOneAndDelete({ userid })
-		return candidate
+	async deleteUser(id) {
+		const candidate = await User.findById(id)
+		const removeUser = await User.findByIdAndDelete(id);
+		return candidate;
 	}
 }
 

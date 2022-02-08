@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 class MailerService {
-	async send(email, phone, name, company, request, vessel, imo) {
+	async send(mailBody) {
 		const transporter = nodemailer.createTransport({
 			host: 'smtp.gmail.com',
 			service: 'gmail',
@@ -15,7 +15,7 @@ class MailerService {
 			from: 'admin@navalista.com',
 			to: 'admin@navalista.com',
 			subject: 'asdadaas',
-			text: email + phone + name + company + request + vessel + imo
+			html: mailBody
 		};
 
 		transporter.sendMail(mailOption);

@@ -1,6 +1,5 @@
 const userService = require('../services/user-service');
 const mailerService = require('../services/mailer-service')
-const { validationResult } = require('express-validator');
 class UserController {
 	async login(req, res, next) {
 		try {
@@ -15,22 +14,27 @@ class UserController {
 
 	async createUser(req, res, next) {
 		try {
-			const errors = validationResult(req);
-			if (!errors.isEmpty()) {
-				throw ApiError.BedRequest(`Error while creating a new user!`);
-			}
 			const { userid, email, password, name, surname } = req.body;
 			const userData = await userService.createUser(userid, email, password, name, surname);
 			return res.json(userData);
-		} catch(e) {
+		} catch (e) {
 			next(e);
 		}
 	}
 
 	async updateUser(req, res, next) {
 		try {
-			const { userid, newUserid, email, password, name, surname } = req.body;
-			const userData = await userService.updateUser(userid, newUserid, email, password, name, surname);
+			const { id, userid, email, name, surname } = req.body;
+			const userData = await userService.updateUser(id, userid, email, name, surname);
+			return res.json(userData);
+		} catch (e) {
+			next(e);
+		}
+	}
+	async updatePasswordUser(req, res, next) {
+		try {
+			const { passwordId, newPassword } = req.body;
+			const userData = await userService.updatePasswordUser(passwordId, newPassword);
 			return res.json(userData);
 		} catch (e) {
 			next(e);
@@ -39,10 +43,11 @@ class UserController {
 
 	async deleteUser(req, res, next) {
 		try {
-			const { userid } = req.body;
-			await userService.deleteUsers(userid);
-			if (candidate) {
-				return res.json({ message: "User successfully deleted!" });
+			const { id } = req.body;
+			const response = await userService.deleteUser(id);
+			const { userid, email } = response;
+			if (response) {
+				return res.json({ message: `User with user ID:${userid} and E-mail:${email} successfully deleted!` });
 			} else {
 				return res.json({ message: "This user does not exist!" });
 			}
@@ -84,8 +89,8 @@ class UserController {
 
 	async mailSend(req, res, next) {
 		try {
-			const { email, phone, name, company, request, vessel, imo } = req.body;
-			mailerService.send(email, phone, name, company, request, vessel, imo)
+			const { mailBody } = req.body;
+			const response = mailerService.send(mailBody)
 			return res.json('Email sent successfully!');
 		} catch (e) {
 			next(e);
