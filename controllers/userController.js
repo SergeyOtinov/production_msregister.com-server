@@ -12,6 +12,26 @@ class UserController {
 		}
 	}
 
+	async updateEmailAdmin(req, res, next) {
+		try {
+			const { newEmail } = req.body;
+			const result = await userService.updateEmailAdmin(newEmail);
+			return res.json(result);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async updatePasswordAdmin(req, res, next) {
+		try {
+			const { newPassword } = req.body;
+			const result = await userService.updatePasswordAdmin(newPassword);
+			return res.json(result);
+		} catch (e) {
+			next(e);
+		}
+	}
+
 	async createUser(req, res, next) {
 		try {
 			const { userid, email, password, name, surname } = req.body;

@@ -44,6 +44,17 @@ class UserService {
 		return token;
 	}
 
+	async updateEmailAdmin(email) {
+			const result = await User.findOneAndUpdate({ roles: ["ADMIN"] }, { email });
+			return result;
+	}
+
+	async updatePasswordAdmin(newPassword) {
+		const hashPassword = bcrypt.hashSync(newPassword, 7);
+		const result = await User.findOneAndUpdate({ roles: ["ADMIN"] }, { password: hashPassword });
+		return result;
+	}
+
 	async getUsers() {
 		const users = await User.find({ roles: ["USER"] });
 		return users;
