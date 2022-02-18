@@ -65,8 +65,8 @@ class UserController {
 		try {
 			const { id } = req.body;
 			const response = await userService.deleteUser(id);
-			const { userid, email } = response;
 			if (response) {
+				const { userid, email } = response;
 				return res.json({ message: `User with user ID:${userid} and E-mail:${email} successfully deleted!` });
 			} else {
 				return res.json({ message: "This user does not exist!" });
