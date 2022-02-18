@@ -38,18 +38,4 @@ const start = async () => {
 
 https.createServer(httpsOptions, app).listen(PORT, console.log(`server started on port ${PORT}`));
 
-
-// const start = async () => {
-// 	try {
-// 		await mongoose.connect(process.env.DB_URL, {
-// 			useNewUrlParser: true,
-// 			useUnifiedTopology: true
-// 		});
-		
-		// app.listen(PORT, console.log(`server started on port ${PORT}`))
-// 	} catch (e) {
-// 		console.log(e)
-// 	}
-// }
-
 start()
