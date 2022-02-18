@@ -1,11 +1,17 @@
 require('dotenv').config()
 const express = require('express');
+const https = require( "https" )
 const mongoose = require('mongoose');
 const cors = require('cors');
 const router = require('./routes/index');
 const errorMidleware = require('./middleware/error-middleware')
 const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT || 5000
+
+const httpsOptions = {
+	key: fs.readFileSync('../certificates/key.pem'),
+	cert: fs.readFileSync('../certificates/cert.pem')
+};
 
 const app = express()
 
@@ -29,5 +35,7 @@ const start = async () => {
 		console.log(e)
 	}
 }
+
+https.createServer(httpsOptions, app).listen(PORT);
 
 start()
