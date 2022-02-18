@@ -31,12 +31,11 @@ const start = async () => {
 			useNewUrlParser: true,
 			useUnifiedTopology: true
 		});
-		app.listen(PORT, console.log(`server started on port ${PORT}`))
+		https.createServer(httpsOptions, app).listen(PORT);
+		// app.listen(PORT, console.log(`server started on port ${PORT}`))
 	} catch (e) {
 		console.log(e)
 	}
 }
-
-https.createServer(httpsOptions, app).listen(PORT);
 
 start()
