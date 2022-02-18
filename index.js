@@ -1,8 +1,5 @@
 require('dotenv').config()
-const https = require('https');
-const fs = require('fs');
 const express = require('express');
-const path =require('path')
 const mongoose = require('mongoose');
 const cors = require('cors');
 const router = require('./routes/index');
@@ -27,14 +24,7 @@ const start = async () => {
 			useNewUrlParser: true,
 			useUnifiedTopology: true
 		});
-
-		const sslServer = https.createServer({
-			key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-			cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
-			}, app)
-
-		sslServer.listen(PORT, () => console.log(`SSL server started on port ${PORT}`))
-		// app.listen(PORT, console.log(`server started on port ${PORT}`))
+		app.listen(PORT, console.log(`server started on port ${PORT}`))
 	} catch (e) {
 		console.log(e)
 	}
