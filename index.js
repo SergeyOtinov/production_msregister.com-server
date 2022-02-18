@@ -26,16 +26,30 @@ app.use('/', router);
 app.use(errorMidleware);
 
 const start = async () => {
-	try {
-		await mongoose.connect(process.env.DB_URL, {
-			useNewUrlParser: true,
-			useUnifiedTopology: true
-		});
-		https.createServer(httpsOptions, app).listen(PORT);
-		// app.listen(PORT, console.log(`server started on port ${PORT}`))
-	} catch (e) {
-		console.log(e)
+		try {
+			await mongoose.connect(process.env.DB_URL, {
+				useNewUrlParser: true,
+				useUnifiedTopology: true
+			});
+		} catch (e) {
+			console.log(e)
+		}
 	}
-}
+
+https.createServer(httpsOptions, app).listen(PORT, console.log(`server started on port ${PORT}`));
+
+
+// const start = async () => {
+// 	try {
+// 		await mongoose.connect(process.env.DB_URL, {
+// 			useNewUrlParser: true,
+// 			useUnifiedTopology: true
+// 		});
+		
+		// app.listen(PORT, console.log(`server started on port ${PORT}`))
+// 	} catch (e) {
+// 		console.log(e)
+// 	}
+// }
 
 start()
