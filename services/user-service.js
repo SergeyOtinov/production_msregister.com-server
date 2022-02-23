@@ -5,9 +5,6 @@ const tokenService = require('../services/token-service');
 const bcrypt = require('bcrypt');
 const ApiError = require('../exception/api-error');
 const axios = require('axios')
-const request = require('request')
-const { stringify } = require('querystring')
-const http = require('http')
 class UserService {
 	async login(userid, password) {
 		const user = await User.findOne({ userid }) || await User.findOne({ email: userid });
