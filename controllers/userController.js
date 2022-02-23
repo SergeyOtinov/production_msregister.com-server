@@ -1,5 +1,7 @@
 const userService = require('../services/user-service');
 const mailerService = require('../services/mailer-service')
+const querystring = require('querystring');
+const request = require('request');
 class UserController {
 	async login(req, res, next) {
 		try {
@@ -112,6 +114,15 @@ class UserController {
 			const { mailBody } = req.body;
 			const response = mailerService.send(mailBody)
 			return res.json('Email sent successfully!');
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async requestElma(req, res, next) {
+		try {
+			const response = userService.sendRequestElma(req.body)
+			return res.json('Request sent successfully!');
 		} catch (e) {
 			next(e);
 		}

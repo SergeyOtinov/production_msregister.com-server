@@ -9,10 +9,10 @@ const errorMidleware = require('./middleware/error-middleware')
 const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT || 5000
 
-const httpsOptions = {
-	key: fs.readFileSync('../certificates/key.pem'),
-	cert: fs.readFileSync('../certificates/cert.pem')
-};
+// const httpsOptions = {
+// 	key: fs.readFileSync('../certificates/key.pem'),
+// 	cert: fs.readFileSync('../certificates/cert.pem')
+// };
 
 const app = express()
 
@@ -31,11 +31,13 @@ const start = async () => {
 				useNewUrlParser: true,
 				useUnifiedTopology: true
 			});
+
+			app.listen(PORT, console.log(`server started on port ${PORT}`));
 		} catch (e) {
 			console.log(e)
 		}
 	}
 
-https.createServer(httpsOptions, app).listen(PORT, console.log(`server started on port ${PORT}`));
+// https.createServer(httpsOptions, app).listen(PORT, console.log(`server started on port ${PORT}`));
 
 start()
