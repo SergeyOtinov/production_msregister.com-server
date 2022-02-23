@@ -1,7 +1,5 @@
 const userService = require('../services/user-service');
 const mailerService = require('../services/mailer-service')
-const querystring = require('querystring');
-const request = require('request');
 class UserController {
 	async login(req, res, next) {
 		try {
