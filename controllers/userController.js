@@ -107,20 +107,11 @@ class UserController {
 		}
 	}
 
-	async mailSend(req, res, next) {
-		try {
-			const { mailBody } = req.body;
-			
-			return res.json('Email sent successfully!');
-		} catch (e) {
-			next(e);
-		}
-	}
-
 	async requestElma(req, res, next) {
 		try {
 			const requestBody = req.body;
 			const { user_email } = requestBody;
+			console.log(requestBody)
 			const response = mailerService.send(user_email)
 			// const response = userService.sendRequestElma(requestBody)
 			// if (response) {

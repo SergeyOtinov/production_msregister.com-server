@@ -18,7 +18,7 @@ class MailerService {
 		);
 
 		const mailOption = {
-			from: 'request@msregister.com',
+			from: 'admin@navalista.com',
 			to: userMail,
 			subject: 'The result of your request for ELMA365',
 			html: `<h1>Request was sent successfully!</h1>`
