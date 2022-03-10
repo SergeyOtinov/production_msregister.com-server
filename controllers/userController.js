@@ -110,8 +110,8 @@ class UserController {
 	async requestElma(req, res, next) {
 		try {
 			const { requestBody } = req.body;
-			// const { user_email } = requestBody;
-			console.log(requestBody.context)
+			const { user_email } = requestBody.context;
+			console.log(user_email)
 			// const response = mailerService.send(user_email)
 			// const response = userService.sendRequestElma(requestBody)
 			// if (response) {
