@@ -111,9 +111,9 @@ class UserController {
 		try {
 			const { requestBody } = req.body;
 			const { user_email } = requestBody.context;
-			const response = userService.sendRequestElma({ requestBody })
+			const response = userService.sendRequestElma({ requestBody });
 			if (response) {
-				const result = mailerService.send(user_email)
+				const result = mailerService.send(user_email);
 				return res.json(`Request sent successfully!, ${response?.data?.success}`);
 			} else {
 				return res.json('Server error!');
