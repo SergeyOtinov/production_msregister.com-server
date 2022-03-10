@@ -109,9 +109,9 @@ class UserController {
 
 	async requestElma(req, res, next) {
 		try {
-			const { requestBody } = req.body;
-			const { user_email } = requestBody.context;
-			const response = userService.sendRequestElma({ requestBody });
+			const requestBody = req.body;
+			const { user_email } = requestBody.requestBody.context;
+			const response = userService.sendRequestElma(requestBody);
 			if (response) {
 				const result = mailerService.send(user_email);
 				return res.json(`Request sent successfully!, ${response?.data?.success}`);
