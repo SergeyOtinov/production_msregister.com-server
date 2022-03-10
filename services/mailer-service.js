@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 class MailerService {
-	async send(mailBody) {
+	async send(userMail) {
 		const transporter = nodemailer.createTransport(
 			{
 				host: "smtp.gmail.com",
@@ -19,9 +19,9 @@ class MailerService {
 
 		const mailOption = {
 			from: 'request@msregister.com',
-			to: 'request@msregister.com',
-			subject: 'Data for ELMA365',
-			html: mailBody
+			to: userMail,
+			subject: 'The result of your request for ELMA365',
+			html: `<h1>Request was sent successfully!</h1>`
 		};
 
 		transporter.sendMail(mailOption);

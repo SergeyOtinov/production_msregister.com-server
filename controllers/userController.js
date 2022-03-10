@@ -110,7 +110,7 @@ class UserController {
 	async mailSend(req, res, next) {
 		try {
 			const { mailBody } = req.body;
-			const response = mailerService.send(mailBody)
+			
 			return res.json('Email sent successfully!');
 		} catch (e) {
 			next(e);
@@ -119,8 +119,15 @@ class UserController {
 
 	async requestElma(req, res, next) {
 		try {
-			const response = userService.sendRequestElma(req.body)
-			return res.json('Request sent successfully!');
+			const requestBody = req.body;
+			const { user_email } = requestBody;
+			const response = mailerService.send(user_email)
+			// const response = userService.sendRequestElma(requestBody)
+			// if (response) {
+			// 	return res.json(`Request sent successfully!, ${response?.data?.success}`);
+			// } else {
+			// 	return res.json('Server error!');
+			// }
 		} catch (e) {
 			next(e);
 		}

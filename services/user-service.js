@@ -91,29 +91,20 @@ class UserService {
 	}
 
 	async sendRequestElma(requestBody) {
-		const body = {
-			"context": {
-				"user_email": "test@test.ua",
-				"imo": "1111111",
-				"vessel_name": "Vessel Name",
-				"company_name": "Company",
-				"__target": "website"
-			}
-		};
-		axios
-			.post('http://195.64.240.218/pub/v1/bpm/template/ships/registration_of_survey_work/run', body, {
-				headers: {
-					'X-Token': '5c1f3a34-d69e-48a0-a6b7-25a9eff4a247',
-					'Content-Type': 'application/json'
-				}
-			})
-			.then(res => {
-				console.log(res.data.success)
+		// axios
+		// 	.post('http://195.64.240.218/pub/v1/bpm/template/ships/registration_of_survey_work/run', requestBody, {
+		// 		headers: {
+		// 			'X-Token': '5c1f3a34-d69e-48a0-a6b7-25a9eff4a247',
+		// 			'Content-Type': 'application/json'
+		// 		}
+		// 	})
+		// 	.then(res => {
+		// 		console.log(res.data.success)
 
-			})
-			.catch(error => {
-				console.error(error)
-			})
+		// 	})
+		// 	.catch(error => {
+		// 		console.error(error)
+		// 	})
 	}
 }
 
